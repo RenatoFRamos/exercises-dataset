@@ -10,10 +10,25 @@ function err(code, params) {
   return { code, params };
 }
 
+// Higieniza texto colado/importado antes de tentar interpretar como JSON.
+// Cobre dois problemas reais observados:
+// - Teclados (principalmente iOS) trocam aspas retas por aspas tipográficas
+//   ("smart quotes") ao colar/autocorrigir, o que quebra JSON.parse.
+// - IAs de texto às vezes devolvem o JSON dentro de um bloco ```json ... ```
+//   mesmo quando instruídas a não fazer isso.
+function sanitizeJsonText(rawText) {
+  return rawText
+    .trim()
+    .replace(/^```(?:json)?\s*/i, '')
+    .replace(/```\s*$/, '')
+    .replace(/[“”]/g, '"')
+    .replace(/[‘’]/g, "'");
+}
+
 export function parseAndValidate(rawText, validExerciseIds) {
   let obj;
   try {
-    obj = JSON.parse(rawText);
+    obj = JSON.parse(sanitizeJsonText(rawText));
   } catch (e) {
     return { valid: false, errors: [err('error.invalid_json')], data: null };
   }

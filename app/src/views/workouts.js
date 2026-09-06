@@ -92,7 +92,7 @@ export async function renderWorkouts(container) {
 
   container.querySelector('#new-workout-fab').addEventListener('click', () => openNewWorkoutModal(container));
   container.querySelector('#import-btn').addEventListener('click', () => openImportModal(container));
-  container.querySelector('#ai-workout-btn').addEventListener('click', () => openAiWorkoutModal(container));
+  container.querySelector('#ai-workout-btn').addEventListener('click', () => openAiWorkoutModal());
 }
 
 function openNewWorkoutModal(container) {
@@ -156,7 +156,7 @@ function openImportModal(container) {
       <div class="text-tertiary text-sm text-center mb-3">${t('import.or')}</div>
       <div class="field">
         <label class="field-label">${t('import.paste_label')}</label>
-        <textarea class="textarea" id="paste-json" style="min-height: 8rem; font-family: monospace; font-size: 0.8rem;" placeholder="${t('import.paste_placeholder')}"></textarea>
+        <textarea class="textarea" id="paste-json" style="min-height: 8rem; font-family: monospace; font-size: 0.8rem;" placeholder="${t('import.paste_placeholder')}" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false"></textarea>
       </div>
       <button class="btn btn-secondary btn-block mb-3" id="validate-pasted">${t('import.validate_pasted')}</button>
       <div id="import-result"></div>

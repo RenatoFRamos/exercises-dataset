@@ -138,13 +138,7 @@ export function renderSettings(container) {
         <section class="card mb-4">
           <div class="font-bold mb-2">${t('settings.section_ai')}</div>
           <p class="text-secondary text-sm mb-3">${t('settings.ai_explainer')}</p>
-          <button class="btn btn-secondary btn-block mb-4" id="export-ai-template">${t('settings.export_ai_template')}</button>
-
-          <div class="field">
-            <label class="field-label">${t('settings.gemini_key')}</label>
-            <input class="input" type="password" id="gemini-api-key" value="${s.gemini_api_key || ''}" placeholder="${t('settings.gemini_key_placeholder')}" autocomplete="off" />
-            <p class="text-tertiary text-sm mt-1">${t('settings.gemini_key_hint')} <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a></p>
-          </div>
+          <button class="btn btn-secondary btn-block" id="export-ai-template">${t('settings.export_ai_template')}</button>
         </section>
 
         <section class="card mb-4">
@@ -181,8 +175,6 @@ export function renderSettings(container) {
   });
 
   container.querySelector('#open-plates').addEventListener('click', () => openPlatesCalculator({ settings: s }));
-
-  container.querySelector('#gemini-api-key').addEventListener('change', (e) => apply({ gemini_api_key: e.target.value.trim() }));
 
   container.querySelector('#export-ai-template').addEventListener('click', async () => {
     const template = buildAiTemplate();

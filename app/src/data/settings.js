@@ -15,8 +15,7 @@ export const DEFAULTS = {
   plate_set: [25, 20, 15, 10, 5, 2.5, 1.25],
   bar_weight: 20,
   onboarding_done: false,
-  seed_version: 0,
-  gemini_api_key: ''
+  seed_version: 0
 };
 
 // Chaves espelhadas em localStorage para o boot síncrono (contrato da T08).

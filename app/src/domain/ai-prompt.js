@@ -45,7 +45,16 @@ export function buildAiPrompt(answers) {
     'Exemplo de estrutura esperada (adapte o conteúdo, mantenha os campos):',
     '```json',
     exampleJson,
-    '```'
+    '```',
+    '',
+    'IMPORTANTE SOBRE O FORMATO DO JSON — siga EXATAMENTE as mesmas características do exemplo acima, para o arquivo abrir sem erro:',
+    '- Use aspas duplas retas (") em todas as chaves e valores de texto — nunca aspas curvas/tipográficas (" " \' \').',
+    '- Não inclua vírgula depois do último item de uma lista ou objeto.',
+    '- Não inclua comentários dentro do JSON (// ou /* */ não são JSON válido).',
+    '- Números (sets, rest_seconds, warmup_sets) sem aspas; textos (reps, notes, label, custom_name) sempre com aspas.',
+    '- "superset_group" e "custom_name" quando não usados devem ser null (sem aspas), nunca a string "null".',
+    '- Devolva o JSON completo e fechado (todas as chaves { e [ abertas devem ser fechadas) — não corte a resposta no meio.',
+    '- Responda com o bloco ```json contendo só o JSON, nada de texto antes ou depois, nem dentro do bloco.'
   ].filter(Boolean);
 
   return lines.join('\n');
