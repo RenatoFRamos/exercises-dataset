@@ -171,7 +171,11 @@ export async function addExerciseToDay(dayId, data) {
     warmup_sets: data.warmup_sets ?? 0,
     set_type: data.set_type ?? 'normal',
     superset_group: data.superset_group ?? null,
-    notes: data.notes ?? ''
+    notes: data.notes ?? '',
+    // IDs de exercícios do catálogo sugeridos como substitutos diretos deste
+    // (vindos da IA ou adicionados manualmente) — mostrados antes das
+    // alternativas automáticas por grupo muscular ao trocar de exercício.
+    substitute_ids: data.substitute_ids ?? []
   };
   await db.put('workout_exercises', record);
   const day = await db.get('workout_days', dayId);

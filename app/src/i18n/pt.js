@@ -107,6 +107,9 @@ export const pt = {
   'workout_edit.superset_group': 'Grupo de super série',
   'workout_edit.superset_none': 'Nenhum',
   'workout_edit.notes': 'Notas do exercício',
+  'workout_edit.substitutes': 'Substitutos',
+  'workout_edit.add_substitute': 'Adicionar substituto',
+  'workout_edit.no_substitutes': 'Nenhum substituto definido — será usada a sugestão automática por grupo muscular.',
   'workout_edit.no_days': 'Adicione um dia para começar.',
   'workout_edit.no_exercises_in_day': 'Nenhum exercício neste dia ainda.',
 
@@ -142,6 +145,8 @@ export const pt = {
   'session.discard': 'Descartar',
   'session.last_time': 'última: {sets}×{reps} @ {weight}{unit}',
   'session.no_history': 'Primeira vez com este exercício',
+  'session.rest_label': 'Descanso',
+  'session.substitutes_curated': 'Substitutos sugeridos para este exercício:',
   'session.rest_skip': 'Pular',
   'session.rest_add': '+15s',
   'session.rest_sub': '-15s',

@@ -107,6 +107,9 @@ export const en = {
   'workout_edit.superset_group': 'Superset group',
   'workout_edit.superset_none': 'None',
   'workout_edit.notes': 'Exercise notes',
+  'workout_edit.substitutes': 'Substitutes',
+  'workout_edit.add_substitute': 'Add substitute',
+  'workout_edit.no_substitutes': 'No substitute set — the automatic same muscle group suggestion will be used.',
   'workout_edit.no_days': 'Add a day to get started.',
   'workout_edit.no_exercises_in_day': 'No exercises in this day yet.',
 
@@ -142,6 +145,8 @@ export const en = {
   'session.discard': 'Discard',
   'session.last_time': 'last: {sets}×{reps} @ {weight}{unit}',
   'session.no_history': 'First time with this exercise',
+  'session.rest_label': 'Rest',
+  'session.substitutes_curated': 'Suggested substitutes for this exercise:',
   'session.rest_skip': 'Skip',
   'session.rest_add': '+15s',
   'session.rest_sub': '-15s',

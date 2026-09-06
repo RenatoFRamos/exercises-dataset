@@ -159,7 +159,7 @@ export async function renderSessionActive(container, params) {
         </div>
         <div class="rest-timer hidden" id="rest-timer-bar">
           <div>
-            <div class="text-sm">${t('common.minutes_short')}</div>
+            <div class="text-sm">${t('session.rest_label')}</div>
             <div class="rest-timer-time" id="rest-timer-time">0:00</div>
           </div>
           <div class="rest-timer-actions">
@@ -316,10 +316,15 @@ export async function renderSessionActive(container, params) {
 
   function openReplaceModal(ex) {
     const exercise = ex.exercise_id ? exerciseById.get(ex.exercise_id) : null;
-    const alternatives = exercise ? findAlternatives(exercise, allExercises) : [];
+    // Prioriza substitutos curados (sugeridos pela IA ou adicionados à mão
+    // na edição do treino) — só cai para as alternativas automáticas por
+    // grupo muscular quando não há nenhum definido para este exercício.
+    const curated = (ex.substitute_ids || []).map((id) => exerciseById.get(id)).filter(Boolean);
+    const alternatives = curated.length ? curated : (exercise ? findAlternatives(exercise, allExercises) : []);
     showModal((modal, close) => {
       modal.innerHTML = `
         <div class="modal-header"><h2 class="text-lg font-bold">${t('session.replace_exercise')}</h2></div>
+        ${curated.length ? `<p class="text-secondary text-sm mb-3">${t('session.substitutes_curated')}</p>` : ''}
         <div class="exercise-grid">
           ${alternatives.length ? alternatives.slice(0, 12).map((alt) => exerciseCardHtml(alt)).join('') : `<p class="text-secondary">${t('exercise.alternatives_empty')}</p>`}
         </div>

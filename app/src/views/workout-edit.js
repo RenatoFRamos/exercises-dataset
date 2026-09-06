@@ -268,6 +268,11 @@ export async function renderWorkoutEdit(container, params) {
           <label class="field-label">${t('workout_edit.notes')}</label>
           <textarea class="textarea" id="f-notes">${ex.notes || ''}</textarea>
         </div>
+        <div class="field">
+          <label class="field-label">${t('workout_edit.substitutes')}</label>
+          <div id="substitutes-list" class="flex gap-2 mb-2" style="flex-wrap:wrap;"></div>
+          <button type="button" class="btn btn-secondary btn-sm" id="add-substitute-btn">+ ${t('workout_edit.add_substitute')}</button>
+        </div>
         <div class="modal-footer">
           <button class="btn btn-secondary btn-block" data-cancel>${t('common.cancel')}</button>
           <button class="btn btn-primary btn-block" data-save>${t('common.save')}</button>
@@ -282,6 +287,32 @@ export async function renderWorkoutEdit(container, params) {
         });
       });
 
+      let substituteIds = [...(ex.substitute_ids || [])];
+      function renderSubstitutes() {
+        const listEl = modal.querySelector('#substitutes-list');
+        listEl.innerHTML = substituteIds.length
+          ? substituteIds.map((id) => {
+              const sub = exerciseCache.get(id);
+              const name = sub ? tExerciseName(sub) : '?';
+              return `<span class="badge">${name} <button type="button" data-remove-substitute="${id}" aria-label="${t('common.delete')}">✕</button></span>`;
+            }).join('')
+          : `<p class="text-tertiary text-sm">${t('workout_edit.no_substitutes')}</p>`;
+        listEl.querySelectorAll('[data-remove-substitute]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            substituteIds = substituteIds.filter((id) => id !== btn.dataset.removeSubstitute);
+            renderSubstitutes();
+          });
+        });
+      }
+      renderSubstitutes();
+
+      modal.querySelector('#add-substitute-btn').addEventListener('click', () => {
+        openSubstitutePickerModal((pickedId) => {
+          if (!substituteIds.includes(pickedId)) substituteIds.push(pickedId);
+          renderSubstitutes();
+        });
+      });
+
       modal.querySelector('[data-cancel]').addEventListener('click', close);
       modal.querySelector('[data-save]').addEventListener('click', async () => {
         const sets = parseInt(modal.querySelector('#f-sets').value, 10) || 1;
@@ -293,10 +324,34 @@ export async function renderWorkoutEdit(container, params) {
           warmup_sets: Math.min(warmup, sets),
           set_type: selectedType,
           superset_group: modal.querySelector('#f-superset').value.trim() || null,
-          notes: modal.querySelector('#f-notes').value
+          notes: modal.querySelector('#f-notes').value,
+          substitute_ids: substituteIds
         });
         close();
         onDone();
+      });
+    });
+  }
+
+  function openSubstitutePickerModal(onPick) {
+    showModal((modal, close) => {
+      modal.innerHTML = `
+        <div class="modal-header"><h2 class="text-lg font-bold">${t('workout_edit.add_substitute')}</h2></div>
+        <div class="search-bar"><span>🔎</span><input type="text" id="sub-search" placeholder="${t('library.search_placeholder')}" /></div>
+        <div class="exercise-grid" id="sub-search-results" style="max-height: 50vh; overflow-y: auto;"></div>
+      `;
+      const resultsEl = modal.querySelector('#sub-search-results');
+      function search(term) {
+        const matches = allExercises.filter((e) => exerciseMatchesSearch(e, term)).slice(0, 30);
+        resultsEl.innerHTML = matches.map((e) => exerciseCardHtml(e)).join('');
+      }
+      search('');
+      modal.querySelector('#sub-search').addEventListener('input', (e) => search(e.target.value));
+      resultsEl.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-open-exercise]');
+        if (!btn) return;
+        onPick(btn.dataset.openExercise);
+        close();
       });
     });
   }

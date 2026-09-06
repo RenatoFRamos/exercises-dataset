@@ -49,6 +49,7 @@ const INSTRUCTIONS = [
   `  - "set_type": um destes valores: ${SET_TYPES.map((s) => `"${s}"`).join(', ')}. Use "normal" na maioria dos casos.`,
   '  - "superset_group": use a mesma letra (ex.: "A") em 2+ exercícios para indicar que são feitos em sequência, sem descanso entre eles (bi-set/superserie). Use null quando o exercício for isolado.',
   '  - "notes": observação livre sobre a execução (pode ser "").',
+  '  - "substitutes": lista de 1 a 3 nomes de exercícios que podem substituir este (mesmo grupo muscular/padrão de movimento, para quando o aparelho estiver ocupado). Cada item é só o nome em texto, no mesmo formato de "custom_name". Pode ser uma lista vazia [] se não houver substituto óbvio.',
   '',
   'IMPORTANTE:',
   '- Não invente campos novos nem remova os campos acima.',
@@ -79,7 +80,8 @@ export function buildAiTemplate() {
             warmup_sets: 1,
             set_type: 'normal',
             superset_group: null,
-            notes: 'Exemplo usando um exercise_id real do catálogo.'
+            notes: 'Exemplo usando um exercise_id real do catálogo.',
+            substitutes: ['Supino com halteres', 'Supino máquina']
           },
           {
             exercise_id: '0334',
@@ -90,7 +92,8 @@ export function buildAiTemplate() {
             warmup_sets: 0,
             set_type: 'normal',
             superset_group: 'A',
-            notes: 'Exemplo de bi-set: sem descanso até terminar o grupo A.'
+            notes: 'Exemplo de bi-set: sem descanso até terminar o grupo A.',
+            substitutes: ['Elevação lateral no cross']
           },
           {
             exercise_id: null,
@@ -101,7 +104,8 @@ export function buildAiTemplate() {
             warmup_sets: 0,
             set_type: 'drop_set',
             superset_group: 'A',
-            notes: 'Exemplo de exercício sem ID conhecido — use custom_name.'
+            notes: 'Exemplo de exercício sem ID conhecido — use custom_name.',
+            substitutes: []
           }
         ]
       }

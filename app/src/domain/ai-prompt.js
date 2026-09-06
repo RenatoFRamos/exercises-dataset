@@ -41,7 +41,7 @@ export function buildAiPrompt(answers) {
     `- Mantenha "schema_version": ${SCHEMA_VERSION} e "type": "${FILE_TYPE}" sem alterar.`,
     '- "days": um item por dia de treino, cada um com "label" e uma lista "exercises".',
     '- Cada exercício tem: "exercise_id" (use null se não tiver certeza do ID), "custom_name" (nome do exercício em texto — obrigatório quando exercise_id for null), "sets" (número), "reps" (texto, ex.: "8-12"), "rest_seconds" (número), "warmup_sets" (número, 0 se não houver aquecimento), ' +
-      `"set_type" (um de: ${SET_TYPES.map((s) => `"${s}"`).join(', ')}), "superset_group" (mesma letra em 2+ exercícios feitos em sequência sem descanso, ou null) e "notes" (texto livre, pode ser "").`,
+      `"set_type" (um de: ${SET_TYPES.map((s) => `"${s}"`).join(', ')}), "superset_group" (mesma letra em 2+ exercícios feitos em sequência sem descanso, ou null), "notes" (texto livre, pode ser "") e "substitutes" (lista com 1 a 3 nomes de exercícios substitutos — mesmo grupo muscular, para quando o aparelho estiver ocupado; lista vazia [] se não houver).`,
     '',
     'Exemplo de estrutura esperada (adapte o conteúdo, mantenha os campos):',
     '```json',
