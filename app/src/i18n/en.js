@@ -157,6 +157,8 @@ export const en = {
   'session.summary_note_placeholder': 'How you felt, pain, energy...',
   'session.pr_badge': 'PR!',
   'session.warmup': 'Warm-up',
+  'session.warmup_short': 'W',
+  'session.view_gif': 'View exercise gif',
 
   // ===== History =====
   'history.title': 'History',

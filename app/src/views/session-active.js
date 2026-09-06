@@ -113,7 +113,7 @@ export async function renderSessionActive(container, params) {
         const defaultReps = existing ? existing.reps : reopened ? reopened.reps : (lastSummary ? lastSummary.reps : '');
         rows.push(`
           <div class="set-row ${isWarmup ? 'is-warmup' : ''} ${existing ? 'is-completed' : ''}" data-plan="${ex.id}" data-set-index="${i}">
-            <div class="set-index">${isWarmup ? 'W' : i - (ex.warmup_sets || 0) + 1}</div>
+            <div class="set-index">${isWarmup ? t('session.warmup_short') : i - (ex.warmup_sets || 0) + 1}</div>
             <input type="number" inputmode="decimal" class="input-weight" placeholder="${unitLabel(settings.unit)}" value="${defaultWeight}" ${existing ? 'disabled' : ''} />
             <input type="number" inputmode="numeric" class="input-reps" placeholder="reps" value="${defaultReps}" ${existing ? 'disabled' : ''} />
             <button class="set-check ${existing ? 'checked' : ''}" data-toggle-set>${existing ? '✓' : ''}</button>
@@ -131,6 +131,7 @@ export async function renderSessionActive(container, params) {
                 ? `<div class="last-session-ref">${t('session.last_time', { sets: lastSummary.count, reps: lastSummary.reps, weight: toDisplay(lastSummary.weight_kg, settings.unit), unit: unitLabel(settings.unit) })}</div>`
                 : `<div class="last-session-ref">${t('session.no_history')}</div>`}
             </div>
+            ${exercise ? `<button class="btn-icon btn-sm" data-zoom="${exercise.gif_url}" data-zoom-alt="${tExerciseName(exercise)}" title="${t('session.view_gif')}">🎬</button>` : ''}
             <button class="btn-icon btn-sm" data-exercise-menu="${ex.id}">⋮</button>
           </div>
           <div data-rows="${ex.id}">${rows.join('')}</div>
@@ -195,8 +196,8 @@ export async function renderSessionActive(container, params) {
   }
 
   function wireEvents() {
-    container.querySelectorAll('[data-zoom]').forEach((img) => {
-      img.addEventListener('click', () => openImageZoom(img.dataset.zoom, img.alt));
+    container.querySelectorAll('[data-zoom]').forEach((el) => {
+      el.addEventListener('click', () => openImageZoom(el.dataset.zoom, el.dataset.zoomAlt || el.alt));
     });
 
     container.querySelectorAll('[data-toggle-set]').forEach((btn) => {

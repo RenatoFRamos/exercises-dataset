@@ -33,6 +33,7 @@ export function buildAiPrompt(answers) {
     'DIRETRIZES DE TREINO:',
     '- Baseie as escolhas de exercícios, ordem, séries, repetições, descanso e técnicas (ex.: bi-set, tri-set, drop-set, rest-pause) em estudos e técnicas reconhecidas de ciência do treinamento (hipertrofia/força), buscando o melhor resultado possível dentro do perfil informado.',
     '- Pode usar bi-sets ou tri-sets (mesmo "superset_group"), mas só combine exercícios que usem no máximo um aparelho + halteres, ou que sejam feitos no mesmo equipamento/estação (ex.: duas variações na mesma polia/cross-over). Evite combinar exercícios que exigem aparelhos diferentes e distantes entre si — na prática da academia isso costuma ser inviável (aparelho ocupado por outra pessoa, ou longe um do outro), o que quebra a sequência sem descanso que o bi-set/tri-set exige.',
+    '- Todos os nomes de exercício ("custom_name") devem ficar no MESMO idioma em que este texto foi escrito — não misture idiomas dentro do mesmo treino (ex.: não escreva um nome em português e outro em inglês). Cada nome deve ser compreensível para quem lê nesse idioma, mesmo quando descrever um exercício menos comum.',
     '',
     'Depois de montar o treino, devolva a resposta APENAS como um JSON válido no formato abaixo (sem texto antes ou depois, sem comentários), pois vou importar esse arquivo direto no meu app de treino:',
     '',

@@ -157,6 +157,8 @@ export const pt = {
   'session.summary_note_placeholder': 'Sensação, dor, energia...',
   'session.pr_badge': 'PR!',
   'session.warmup': 'Aquecimento',
+  'session.warmup_short': 'Aq',
+  'session.view_gif': 'Ver gif do exercício',
 
   // ===== Histórico =====
   'history.title': 'Histórico',
