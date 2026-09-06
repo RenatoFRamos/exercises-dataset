@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "type": "meupersonal.workout",
+  "name": "Upper / Lower",
+  "description": "4 dias por semana, dividido entre membros superiores e inferiores.",
+  "days": [
+    {
+      "label": "Upper A",
+      "exercises": [
+        { "exercise_id": "0025", "custom_name": null, "sets": 4, "reps": "6-10", "rest_seconds": 120, "warmup_sets": 2, "set_type": "normal", "superset_group": null, "notes": "" },
+        { "exercise_id": "0027", "custom_name": null, "sets": 3, "reps": "8-12", "rest_seconds": 90, "warmup_sets": 0, "set_type": "normal", "superset_group": null, "notes": "" },
+        { "exercise_id": "0334", "custom_name": null, "sets": 3, "reps": "15", "rest_seconds": 0, "warmup_sets": 0, "set_type": "normal", "superset_group": "A", "notes": "Bi-set com o próximo" },
+        { "exercise_id": "0241", "custom_name": null, "sets": 3, "reps": "15", "rest_seconds": 60, "warmup_sets": 0, "set_type": "normal", "superset_group": "A", "notes": "" }
+      ]
+    },
+    {
+      "label": "Lower A",
+      "exercises": [
+        { "exercise_id": "0043", "custom_name": null, "sets": 4, "reps": "6-10", "rest_seconds": 120, "warmup_sets": 2, "set_type": "normal", "superset_group": null, "notes": "" },
+        { "exercise_id": "0586", "custom_name": null, "sets": 3, "reps": "12", "rest_seconds": 75, "warmup_sets": 0, "set_type": "normal", "superset_group": null, "notes": "" },
+        { "exercise_id": "1372", "custom_name": null, "sets": 3, "reps": "15", "rest_seconds": 45, "warmup_sets": 0, "set_type": "normal", "superset_group": null, "notes": "" }
+      ]
+    },
+    {
+      "label": "Upper B",
+      "exercises": [
+        { "exercise_id": "0652", "custom_name": null, "sets": 3, "reps": "6-10", "rest_seconds": 90, "warmup_sets": 0, "set_type": "normal", "superset_group": null, "notes": "" },
+        { "exercise_id": "0049", "custom_name": null, "sets": 3, "reps": "8-12", "rest_seconds": 90, "warmup_sets": 0, "set_type": "normal", "superset_group": null, "notes": "" },
+        { "exercise_id": "0091", "custom_name": null, "sets": 3, "reps": "8-10", "rest_seconds": 75, "warmup_sets": 1, "set_type": "normal", "superset_group": null, "notes": "" },
+        { "exercise_id": "0294", "custom_name": null, "sets": 3, "reps": "12", "rest_seconds": 60, "warmup_sets": 0, "set_type": "normal", "superset_group": null, "notes": "" }
+      ]
+    },
+    {
+      "label": "Lower B",
+      "exercises": [
+        { "exercise_id": "0085", "custom_name": null, "sets": 4, "reps": "8-10", "rest_seconds": 120, "warmup_sets": 1, "set_type": "normal", "superset_group": null, "notes": "" },
+        { "exercise_id": "0585", "custom_name": null, "sets": 3, "reps": "12-15", "rest_seconds": 60, "warmup_sets": 0, "set_type": "normal", "superset_group": null, "notes": "" },
+        { "exercise_id": "0417", "custom_name": null, "sets": 3, "reps": "15", "rest_seconds": 45, "warmup_sets": 0, "set_type": "normal", "superset_group": null, "notes": "" }
+      ]
+    }
+  ]
+}

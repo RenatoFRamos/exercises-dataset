@@ -1,0 +1,40 @@
+/* ===== Temas: claro (padrão em tokens.css), escuro, alto contraste ===== */
+
+:root[data-theme='dark'] {
+  --bg-base: #101012;
+  --bg-surface: #1a1a1d;
+  --bg-elevated: #232327;
+  --border: #333338;
+  --text-primary: #f4f4f5;
+  --text-secondary: #b4b4ba;
+  --text-tertiary: #838388;
+  --accent-contrast: #101012;
+  --overlay: rgba(0, 0, 0, 0.75);
+}
+
+:root[data-theme='high-contrast'] {
+  --bg-base: #000000;
+  --bg-surface: #000000;
+  --bg-elevated: #0d0d0d;
+  --border: #ffffff;
+  --text-primary: #ffffff;
+  --text-secondary: #ffffff;
+  --text-tertiary: #e0e0e0;
+  --accent-contrast: #000000;
+  --overlay: rgba(0, 0, 0, 0.9);
+  --danger: #ff6b6b;
+  --success: #5cffa0;
+  --warning: #ffd166;
+}
+
+/* ===== Cores de destaque (accent) — combináveis com qualquer tema ===== */
+
+:root[data-accent='orange'] { --accent: #ff5a1f; }
+:root[data-accent='blue']   { --accent: #2f6fed; }
+:root[data-accent='green']  { --accent: #1f9d55; }
+:root[data-accent='purple'] { --accent: #7c4dff; }
+
+:root[data-theme='high-contrast'][data-accent='orange'] { --accent: #ff8a3d; }
+:root[data-theme='high-contrast'][data-accent='blue']   { --accent: #6ea8ff; }
+:root[data-theme='high-contrast'][data-accent='green']  { --accent: #5cffa0; }
+:root[data-theme='high-contrast'][data-accent='purple'] { --accent: #c9a8ff; }

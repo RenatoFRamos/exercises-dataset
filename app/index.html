@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>MeuPersonal</title>
+  <meta name="theme-color" content="#ff5a1f" />
+  <!-- Permite abrir sem a barra do navegador ao "Adicionar à Tela de Início"
+       (funciona de verdade no iOS/Safari mesmo via file://; no Android/Chrome
+       a instalação completa como PWA normalmente exige servidor HTTPS, mas
+       estas tags não têm custo nenhum e não quebram nada se ignoradas). -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="MeuPersonal" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiTWV1UGVyc29uYWwiLCJzaG9ydF9uYW1lIjoiTWV1UGVyc29uYWwiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI2Y0ZjRmNSIsInRoZW1lX2NvbG9yIjoiI2ZmNWExZiJ9" />
+  <script>
+    (function boot() {
+      try {
+        var theme = localStorage.getItem('mp_theme');
+        var accent = localStorage.getItem('mp_accent');
+        var fontScale = localStorage.getItem('mp_font_scale');
+        if (!theme) {
+          theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-accent', accent || 'orange');
+        document.documentElement.style.setProperty('--font-scale', fontScale || '1');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.documentElement.setAttribute('data-accent', 'orange');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="/src/styles/tokens.css" />
+  <link rel="stylesheet" href="/src/styles/themes.css" />
+  <link rel="stylesheet" href="/src/styles/base.css" />
+  <link rel="stylesheet" href="/src/styles/components.css" />
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

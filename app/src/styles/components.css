@@ -1,0 +1,563 @@
+/* ===================== Shell / navegação ===================== */
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  /* `height`, não `min-height`: precisa ser travada para que .app-main vire
+     a área que realmente rola (e não a página inteira) — só assim
+     position:sticky (barra do timer de descanso) gruda no rodapé visível. */
+  height: 100vh;
+  height: 100dvh;
+}
+
+.app-main {
+  flex: 1;
+  min-height: 0; /* permite o item flex encolher e ganhar rolagem própria */
+  overflow-y: auto;
+  padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+}
+
+.view { display: flex; flex-direction: column; min-height: 100%; }
+.view-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.view-header h1 { font-size: 1.25rem; }
+/* container-type habilita @container abaixo — reage à largura REAL da
+   coluna de conteúdo, não à largura da tela. Importa porque a barra lateral
+   (desktop) encolhe essa coluna mesmo em telas largas (ex.: 768px de tela
+   vira ~520px de conteúdo), e uma @media comum não veria isso. */
+.view-content { padding: var(--space-4); flex: 1; container-type: inline-size; }
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  display: flex;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 10;
+}
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) 0;
+  color: var(--text-tertiary);
+  font-size: 0.7rem;
+}
+.nav-item .nav-icon { font-size: 1.35rem; line-height: 1; }
+.nav-item.active { color: var(--accent); }
+
+@media (min-width: 768px) {
+  .app-shell { flex-direction: row; }
+  .bottom-nav {
+    position: static;
+    flex-direction: column;
+    width: 15rem;
+    height: 100vh;
+    border-top: none;
+    border-right: 1px solid var(--border);
+    padding: var(--space-4) var(--space-2);
+    gap: var(--space-1);
+  }
+  .nav-item {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-3);
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+  }
+  .nav-item.active { background: var(--bg-elevated); }
+  .app-main { padding-bottom: var(--space-4); }
+}
+
+/* ===================== Botões ===================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 1rem;
+  min-height: 2.75rem;
+  border: 1px solid transparent;
+  transition: transform 0.05s ease;
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: var(--accent); color: var(--accent-contrast); }
+.btn-secondary { background: var(--bg-elevated); color: var(--text-primary); border-color: var(--border); }
+.btn-ghost { background: transparent; color: var(--accent); }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-block { width: 100%; }
+.btn-icon {
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  padding: 0;
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  font-size: 1.1rem;
+}
+.btn-sm { min-height: 2.1rem; padding: var(--space-2) var(--space-3); font-size: 0.875rem; }
+.btn:disabled { opacity: 0.5; pointer-events: none; }
+
+.fab {
+  position: fixed;
+  right: var(--space-4);
+  bottom: calc(5rem + env(safe-area-inset-bottom));
+  z-index: 8;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 1.75rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+@media (min-width: 768px) { .fab { bottom: var(--space-5); } }
+
+/* ===================== Cards / listas ===================== */
+
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.list-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-3);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-2);
+  width: 100%;
+  text-align: left;
+}
+/* flex-basis (não só flex:1) garante que o título quebre para a própria
+   linha em vez de espremer para largura zero quando o grupo de botões ao
+   lado (ex.: ↑ ↓ ✎ 🗑) não cabe — sem isso o texto "vaza" por cima dos
+   botões em telas estreitas com fonte grande. */
+.list-item-main { flex: 1 1 10rem; min-width: 0; }
+.list-item > .flex.gap-1 { flex-shrink: 0; }
+
+.day-header-row { flex-wrap: wrap; }
+.day-header-row .day-label-input { flex: 1 1 8rem; min-width: 0; }
+.day-header-row > .flex.gap-1 { flex-shrink: 0; }
+.list-item-title { font-weight: 600; }
+.list-item-sub { color: var(--text-secondary); font-size: 0.875rem; }
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-6) var(--space-4);
+  color: var(--text-secondary);
+}
+.empty-state .empty-icon { font-size: 2.5rem; display: block; margin-bottom: var(--space-3); }
+
+.spinner {
+  width: 2rem; height: 2rem;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 999px;
+  animation: spin 0.8s linear infinite;
+  margin: var(--space-6) auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===================== Formulários ===================== */
+
+.field { display: flex; flex-direction: column; gap: var(--space-2); margin-bottom: var(--space-4); }
+.field-label { font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); }
+.field-hint { font-size: 0.75rem; color: var(--text-tertiary); }
+
+.input, .select, .textarea {
+  background: var(--bg-elevated);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: 1rem;
+  color: var(--text-primary);
+  width: 100%;
+  min-width: 0; /* controles de formulário têm largura mínima intrínseca própria do navegador — sem isso, não encolhem dentro de flex/grid */
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.input::placeholder, .textarea::placeholder { color: var(--text-tertiary); }
+.input:focus, .select:focus, .textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--bg-surface);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.textarea { resize: vertical; min-height: 4.5rem; }
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.search-bar input { background: none; border: none; flex: 1; font-size: 1rem; }
+
+/* Empilha os dois <select> de filtro quando a coluna de conteúdo é estreita
+   — lado a lado eles ficam curtos demais e o texto trunca sem aviso
+   (comportamento nativo do <select>, agrava com fonte grande). @container,
+   não @media: a barra lateral do desktop encolhe a coluna mesmo em telas
+   largas. Ver seção 5.6 do APP_RULES. */
+@container (max-width: 480px) {
+  .filter-row { flex-direction: column; }
+}
+
+.chip-row { display: flex; gap: var(--space-2); overflow-x: auto; padding-bottom: var(--space-2); margin-bottom: var(--space-3); }
+.chip {
+  flex-shrink: 0;
+  padding: var(--space-2) var(--space-3);
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+.chip.active { background: var(--accent); color: var(--accent-contrast); border-color: var(--accent); }
+
+.segmented {
+  display: flex;
+  flex-wrap: wrap; /* com muitas opções (ex.: 5 tamanhos de fonte) e pouca largura, quebra em 2 linhas em vez de cortar sem aviso */
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  gap: 3px;
+}
+.segmented button {
+  flex: 1 1 5.5rem; /* flex-basis explícito: evita que o texto force a coluna a ficar larga demais e também evita encolher a ponto de cortar (ver regra min-width abaixo) */
+  min-width: 0;
+  padding: var(--space-2) var(--space-2);
+  border-radius: calc(var(--radius-md) - 3px);
+  font-size: 0.875rem;
+  text-align: center;
+}
+.segmented button.active { background: var(--bg-surface); font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+}
+.badge-accent { background: var(--accent); color: var(--accent-contrast); }
+.badge-success { background: var(--success); color: #fff; }
+.badge-warning { background: var(--warning); color: #1a1a1a; }
+
+/* ===================== Grade de exercícios ===================== */
+
+.exercise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: var(--space-3);
+}
+.exercise-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+.exercise-card-thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--bg-elevated);
+  object-fit: cover;
+}
+.exercise-card-body { padding: var(--space-2) var(--space-3) var(--space-3); }
+.exercise-card-name { font-weight: 600; font-size: 0.9rem; line-height: 1.3; }
+.exercise-card-muscle { font-size: 0.75rem; color: var(--text-secondary); }
+.favorite-star { position: relative; }
+.favorite-btn {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  border-radius: 999px;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.attribution {
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  text-align: center;
+  padding: var(--space-2);
+}
+
+/* ===================== Modal ===================== */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 50;
+}
+.modal {
+  background: var(--bg-surface);
+  width: 100%;
+  max-width: 32rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: var(--space-4);
+}
+@media (min-width: 768px) {
+  .modal-backdrop { align-items: center; }
+  .modal { border-radius: var(--radius-lg); }
+}
+.modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4); }
+.modal-footer { display: flex; gap: var(--space-3); margin-top: var(--space-4); }
+
+/* ===================== Zoom de imagem ===================== */
+
+.zoom-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  touch-action: none;
+}
+.zoom-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3);
+  background: rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 2;
+}
+.zoom-toolbar button { color: #fff; }
+.zoom-stage {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.zoom-stage img {
+  transition: transform 0.05s linear;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.zoom-attribution {
+  position: absolute;
+  bottom: var(--space-3);
+  left: 0; right: 0;
+  text-align: center;
+  color: #fff;
+  font-size: 0.75rem;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  z-index: 2;
+}
+
+/* ===================== Timer de descanso ===================== */
+
+.rest-timer {
+  position: sticky;
+  bottom: 0;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  padding: var(--space-4);
+  display: flex;
+  flex-wrap: wrap; /* em telas estreitas + fonte grande, os botões (-15s/+15s/Pular) não cabem ao lado do relógio — sem isso "Pular" fica cortado fora da tela */
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  z-index: 6;
+}
+.rest-timer-time { font-size: 1.75rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.rest-timer-actions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.rest-timer-actions button {
+  background: rgba(255,255,255,0.25);
+  color: var(--accent-contrast);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+/* ===================== Sessão ativa ===================== */
+
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.session-duration { font-variant-numeric: tabular-nums; font-weight: 700; }
+
+.exercise-block {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-4);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.exercise-block-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4) var(--space-3);
+}
+.exercise-block-thumb { width: 3.25rem; height: 3.25rem; border-radius: var(--radius-md); object-fit: cover; flex-shrink: 0; }
+.last-session-ref {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  padding: var(--space-1) var(--space-2);
+  border-radius: 999px;
+  display: inline-block;
+  margin-top: var(--space-1);
+}
+
+.set-row {
+  display: grid;
+  /* minmax(0, 1fr), não 1fr puro: sem o mínimo explícito em 0, a coluna não
+     encolhe abaixo do tamanho intrínseco do <input>, e a linha estoura para
+     fora do cartão em telas estreitas com fonte grande (o campo de reps e o
+     botão de check ficam cortados, fora da vista). */
+  grid-template-columns: 1.75rem minmax(0, 1fr) minmax(0, 1fr) 2.75rem;
+  gap: var(--space-2);
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  transition: background-color 0.15s ease;
+}
+.set-row.is-warmup { background: color-mix(in srgb, var(--text-tertiary) 8%, transparent); }
+.set-row.is-completed { background: color-mix(in srgb, var(--success) 10%, transparent); }
+.set-index { text-align: center; font-weight: 700; color: var(--text-tertiary); font-size: 0.8rem; }
+
+/* Campos de peso/repetição — fundo e cor SEMPRE explícitos (regra geral já
+   cobre .input/.select/.textarea, mas estes usam classes próprias por causa
+   do grid compacto). Sem isso, o navegador aplica seu estilo nativo de
+   input — no tema escuro isso é fundo branco com texto herdado em branco
+   também, apagando o valor digitado por completo. */
+.input-weight, .input-reps {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-md);
+  text-align: center;
+  padding: var(--space-2) var(--space-1);
+  min-width: 0;
+  font-weight: 600;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.input-weight::placeholder, .input-reps::placeholder { color: var(--text-tertiary); font-weight: 400; }
+.input-weight:focus, .input-reps:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--bg-surface);
+}
+.input-weight:disabled, .input-reps:disabled {
+  background: transparent;
+  color: var(--text-secondary);
+  opacity: 1;
+}
+/* Remove as setinhas de incremento do input[type=number]: elas consomem
+   ~15-20px que faltam nessas colunas estreitas, cortando visualmente o
+   valor (ex.: "50" aparece como "5") mesmo com o dado salvo corretamente. */
+.set-row input::-webkit-outer-spin-button,
+.set-row input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.set-row input[type='number'] { -moz-appearance: textfield; appearance: textfield; }
+
+.set-check {
+  width: 2.25rem; height: 2.25rem;
+  border-radius: 999px;
+  border: 2px solid var(--border);
+  background: var(--bg-surface);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.12s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+.set-check:active { transform: scale(0.9); }
+.set-check.checked {
+  background: var(--success);
+  border-color: var(--success);
+  color: #fff;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--success) 40%, transparent);
+}
+
+/* ===================== Calendário ===================== */
+
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--space-1); }
+.calendar-cell {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  background: var(--bg-elevated);
+  position: relative;
+}
+.calendar-cell.trained { background: var(--success); color: #fff; }
+.calendar-cell.missed { background: color-mix(in srgb, var(--danger) 25%, var(--bg-elevated)); }
+.calendar-cell.empty { background: transparent; }
+.calendar-dot { width: 5px; height: 5px; border-radius: 999px; background: currentColor; margin-top: 2px; }
+
+/* ===================== Utilidades de layout ===================== */
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: var(--space-1); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.w-full { width: 100%; }
+.hidden { display: none !important; }

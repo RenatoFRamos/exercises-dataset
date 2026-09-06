@@ -1,0 +1,73 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  /* base 100% herda a fonte do SO/navegador; --font-scale multiplica por cima (regra 5.6 do APP_RULES) */
+  font-size: calc(100% * var(--font-scale));
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg-base);
+  color: var(--text-primary);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+  line-height: 1.5;
+  overscroll-behavior-y: none;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+img { max-width: 100%; display: block; }
+
+#app {
+  /* precisa ser `height` (não min-height): sem uma altura travada aqui,
+     .app-main nunca vira um container com rolagem própria, e position:sticky
+     na barra do timer de descanso (rest-timer) não gruda no rodapé da tela —
+     ele só desce até o fim da página inteira, bem abaixo do visível. */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Escala tipográfica — tudo em rem, nunca px (regra 5 do plano) ===== */
+.text-xs   { font-size: 0.75rem; }
+.text-sm   { font-size: 0.875rem; }
+.text-base { font-size: 1rem; }
+.text-lg   { font-size: 1.25rem; }
+.text-xl   { font-size: 1.5rem; }
+.text-2xl  { font-size: 2rem; }
+
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary  { color: var(--text-tertiary); }
+.text-danger    { color: var(--danger); }
+.text-success   { color: var(--success); }
+
+.font-bold { font-weight: 700; }
+.font-medium { font-weight: 600; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
