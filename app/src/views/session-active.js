@@ -218,6 +218,14 @@ export async function renderSessionActive(container, params) {
             pendingReopen = { planId, setIndex, weightKg: existingSet.weight_kg, reps: existingSet.reps };
             await removeSessionSet(existingSet.id);
           }
+          // Desmarcar cancela o descanso que essa série tinha disparado — sem
+          // isso o cronômetro seguia rodando por trás e reaparecia sozinho no
+          // próximo tick, mesmo com a série já desmarcada.
+          if (restTimer.isRunning()) {
+            restTimer.stop();
+            hideTimerBar();
+            await notifications.cancelRestEnd();
+          }
           sessionSets = await getSetsForSession(sessionId);
           await paint();
           return;
